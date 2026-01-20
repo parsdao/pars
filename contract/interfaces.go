@@ -5,10 +5,10 @@
 package contract
 
 import (
+	"context"
 	"math/big"
 
 	"github.com/holiman/uint256"
-	"github.com/luxfi/runtime"
 	"github.com/luxfi/geth/common"
 	"github.com/luxfi/geth/core/tracing"
 	ethtypes "github.com/luxfi/geth/core/types"
@@ -63,7 +63,7 @@ type PrecompileEnvironment interface {
 type AccessibleState interface {
 	GetStateDB() StateDB
 	GetBlockContext() BlockContext
-	GetConsensusRuntime() *runtime.Runtime
+	GetConsensusContext() context.Context
 	GetChainConfig() precompileconfig.ChainConfig
 	GetPrecompileEnv() PrecompileEnvironment
 }

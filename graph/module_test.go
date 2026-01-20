@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/luxfi/database/memdb"
+	gvm "github.com/luxfi/vm/manager/graphvm"
 	"github.com/stretchr/testify/require"
 )
 
@@ -27,9 +28,9 @@ func TestSetGraphVMClient(t *testing.T) {
 
 	// Verify client was set
 	require.NotNil(t, GraphContractInstance.precompile.client)
-	_, ok := GraphContractInstance.precompile.client.(*GraphVMClient)
+	client, ok := GraphContractInstance.precompile.client.(*GraphVMClient)
 	require.True(t, ok)
-	// executor field is removed, so we just check the client is set
+	require.NotNil(t, client.executor)
 }
 
 func TestSetGraphVMClientWithChainID(t *testing.T) {
@@ -117,11 +118,16 @@ func TestGraphQLContractRun(t *testing.T) {
 		GraphContractInstance.precompile.client = origClient
 	}()
 
-	// Set up client
+	// Set up real GraphVM client
 	db := memdb.New()
 	defer db.Close()
 
-	SetGraphVMClient(db, nil)
+	config := &gvm.GConfig{
+		MaxQueryDepth:  10,
+		MaxResultSize:  1 << 20,
+		QueryTimeoutMs: 5000,
+	}
+	SetGraphVMClient(db, config)
 
 	// Create input for query method (selector 0x01)
 	req := QueryRequest{
@@ -134,8 +140,8 @@ func TestGraphQLContractRun(t *testing.T) {
 	binary.BigEndian.PutUint32(input[:4], 0x01) // query method selector
 	copy(input[4:], reqBytes)
 
-	// Run the contract - should return error now as functionality is disabled
-	_, _, runErr := GraphContractInstance.Run(
+	// Run the contract
+	result, remainingGas, runErr := GraphContractInstance.Run(
 		nil,                    // accessibleState
 		ContractGraphQLAddress, // caller
 		ContractGraphQLAddress, // addr
@@ -144,9 +150,18 @@ func TestGraphQLContractRun(t *testing.T) {
 		true,                   // readOnly
 	)
 
-	// Stubbed functionality returns nil error (success with empty response)
 	require.NoError(t, runErr)
-	// require.Contains(t, runErr.Error(), "functionality disabled")
+	require.NotNil(t, result)
+	require.Less(t, remainingGas, uint64(1_000_000))
+
+	// Parse response
+	var response map[string]interface{}
+	err = json.Unmarshal(result, &response)
+	require.NoError(t, err)
+
+	chainInfo, ok := response["chainInfo"].(map[string]interface{})
+	require.True(t, ok)
+	require.Equal(t, "graphvm", chainInfo["vmName"])
 }
 
 func TestGraphQLContractRunOutOfGas(t *testing.T) {
@@ -213,6 +228,8 @@ func TestModuleRegistration(t *testing.T) {
 
 func TestContractAddresses(t *testing.T) {
 	// Verify contract addresses are in Graph/Query range (0x0500-0x05FF)
+	// Note: Hashing precompiles (Poseidon2, Pedersen, Blake3) use 0x0500...0001-0004
+	// Graph precompiles start at 0x0500...0010 to avoid conflicts
 	require.Equal(t, "0x0500000000000000000000000000000000000010", ContractGraphQLAddress.Hex())
 	require.Equal(t, "0x0500000000000000000000000000000000000011", ContractSubscribeAddress.Hex())
 	require.Equal(t, "0x0500000000000000000000000000000000000012", ContractCacheAddress.Hex())
