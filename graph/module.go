@@ -12,7 +12,6 @@ import (
 	"github.com/luxfi/precompile/contract"
 	"github.com/luxfi/precompile/modules"
 	"github.com/luxfi/precompile/precompileconfig"
-	gvm "github.com/luxfi/vm/manager/graphvm"
 )
 
 var _ contract.Configurator = (*configurator)(nil)
@@ -43,13 +42,13 @@ var GraphContractInstance = &GraphQLContract{
 
 // SetGraphVMClient configures the Graph precompile to use a real GraphVM client.
 // This should be called during VM initialization when the database is available.
-func SetGraphVMClient(db database.Database, config *gvm.GConfig) {
+func SetGraphVMClient(db database.Database, config interface{}) {
 	client := NewGraphVMClient(db, config)
 	GraphContractInstance.precompile.client = client
 }
 
 // SetGraphVMClientWithChainID configures the client for a specific chain.
-func SetGraphVMClientWithChainID(db database.Database, config *gvm.GConfig, chainID uint64) {
+func SetGraphVMClientWithChainID(db database.Database, config interface{}, chainID uint64) {
 	client := NewGraphVMClientWithChainID(db, config, chainID)
 	GraphContractInstance.precompile.client = client
 }
