@@ -5,7 +5,7 @@ pragma solidity ^0.8.24;
 /**
  * @title IAIMiningPrecompile
  * @notice Precompile interface for AI mining reward calculation at address 0x0300
- * @dev Shared by Hanzo, Lux, and Zoo EVMs for efficient AI mining operations
+ * @dev Shared by Pars Network, Lux, and Zoo EVMs for efficient AI mining operations
  *
  * This precompile provides:
  * - ML-DSA (FIPS 204) quantum-safe signature verification
@@ -25,7 +25,7 @@ pragma solidity ^0.8.24;
  * - LP-2000: AI Mining Standard
  * - LP-5000: A-Chain AI Attestation Specification
  * - LP-5200: AI Mining Standard
- * - HIP-006: Hanzo AI Mining Protocol
+ * - HIP-006: Pars Network AI Mining Protocol
  * - ZIP-005: Zoo AI Mining Integration
  * - FIPS 204: Module-Lattice Digital Signature Algorithm (ML-DSA)
  */

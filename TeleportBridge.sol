@@ -4,16 +4,16 @@ pragma solidity ^0.8.19;
 /**
  * @title ITeleportBridge
  * @notice Interface for the Teleport Bridge precompile at address 0x0301
- * @dev Enables cross-chain AI token transfers from Hanzo L1 to supported EVMs
+ * @dev Enables cross-chain AI token transfers from Pars Network L1 to supported EVMs
  *
  * Supported destination chains:
- * - Hanzo EVM: Chain ID 36963
+ * - Pars Network EVM: Chain ID 36963
  * - Zoo EVM: Chain ID 200200
  * - Lux C-Chain: Chain ID 43114
  *
  * References:
  * - LP-2000: AI Mining Standard
- * - HIP-006: Hanzo AI Mining Protocol
+ * - HIP-006: Pars Network AI Mining Protocol
  * - ZIP-005: Zoo AI Mining Integration
  */
 interface ITeleportBridge {
@@ -21,7 +21,7 @@ interface ITeleportBridge {
 
     struct TeleportTransfer {
         bytes32 teleportId;      // Unique transfer identifier
-        uint256 sourceChain;     // Source chain ID (always Hanzo L1 = 0)
+        uint256 sourceChain;     // Source chain ID (always Pars Network L1 = 0)
         uint256 destChain;       // Destination chain ID
         bytes32 senderPkHash;    // BLAKE3 hash of sender's ML-DSA public key
         address recipient;       // Recipient address on destination chain
@@ -39,7 +39,7 @@ interface ITeleportBridge {
 
     // ============ Events ============
 
-    /// @notice Emitted when a new teleport is received from Hanzo L1
+    /// @notice Emitted when a new teleport is received from Pars Network L1
     event TeleportReceived(
         bytes32 indexed teleportId,
         uint256 indexed sourceChain,
@@ -154,7 +154,7 @@ contract TeleportBridgePrecompile {
     /// @notice The precompile address
     address public constant PRECOMPILE_ADDRESS = address(0x0301);
 
-    /// @notice Hanzo L1 chain identifier (source of all teleports)
+    /// @notice Pars Network L1 chain identifier (source of all teleports)
     uint256 public constant HANZO_L1_CHAIN_ID = 0;
 
     /// @notice Supported destination chain IDs

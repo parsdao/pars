@@ -4,17 +4,17 @@ pragma solidity ^0.8.19;
 /**
  * @title IAIMining
  * @notice Interface for the AI Mining precompile at address 0x0300
- * @dev Enables EVM contracts to interact with the Hanzo AI Mining Protocol
+ * @dev Enables EVM contracts to interact with the Pars Network AI Mining Protocol
  *
  * This precompile provides:
  * - Mining balance queries for ML-DSA addresses
  * - ML-DSA (FIPS 204) signature verification
- * - Teleport transfer claiming from Hanzo L1
+ * - Teleport transfer claiming from Pars Network L1
  * - Pending teleport queries
  *
  * References:
  * - LP-2000: AI Mining Standard
- * - HIP-006: Hanzo AI Mining Protocol
+ * - HIP-006: Pars Network AI Mining Protocol
  * - ZIP-005: Zoo AI Mining Integration
  * - FIPS 204: Module-Lattice Digital Signature Algorithm (ML-DSA)
  */
@@ -89,7 +89,7 @@ interface IAIMining {
      * @return sender The sender's ML-DSA public key hash
      * @return recipient The recipient address
      * @return amount The transfer amount
-     * @return sourceChain The source chain ID (always Hanzo L1)
+     * @return sourceChain The source chain ID (always Pars Network L1)
      * @return status The transfer status (0=pending, 1=claimed, 2=expired)
      */
     function getTeleportDetails(bytes32 teleportId)
@@ -106,7 +106,7 @@ interface IAIMining {
     // ============ State-Changing Functions ============
 
     /**
-     * @notice Claim teleported AI rewards from Hanzo L1
+     * @notice Claim teleported AI rewards from Pars Network L1
      * @param teleportId The unique teleport transfer identifier
      * @return The amount of AI tokens claimed
      *

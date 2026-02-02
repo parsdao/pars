@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 
 export const metadata = {
   title: 'Lux Precompiles',
-  description: 'Native EVM precompile documentation for Lux Network',
+  description: 'Native EVM precompile documentation for Pars Network',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

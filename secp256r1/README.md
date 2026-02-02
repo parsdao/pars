@@ -1,6 +1,6 @@
 # secp256r1 (P-256) Signature Verification Precompile
 
-Implementation of the secp256r1 (NIST P-256) signature verification precompile for the Lux Network EVM.
+Implementation of the secp256r1 (NIST P-256) signature verification precompile for the Pars Network EVM.
 
 ## Overview
 
@@ -87,7 +87,7 @@ func verify(hash []byte, r, s, x, y *big.Int) bool {
 - [EIP-7212](https://eips.ethereum.org/EIPS/eip-7212): secp256r1 Curve Support
 - [RIP-7212](https://github.com/ethereum/RIPs/blob/master/RIPS/rip-7212.md): Rollup precompile
 - [NIST FIPS 186-3](https://csrc.nist.gov/publications/detail/fips/186/3/archive/2009-06-25): Digital Signature Standard
-- [LP-3651](https://github.com/luxfi/lps): Lux Network specification
+- [LP-3651](https://github.com/luxfi/lps): Pars Network specification
 
 ## Testing
 

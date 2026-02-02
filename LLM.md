@@ -812,7 +812,7 @@ Full 5-node validator network with production configuration:
 # Start mainnet (5 validators)
 docker compose up -d
 
-# Add explorers for Zoo/Hanzo chains
+# Add explorers for Zoo/Pars Network chains
 docker compose --profile explorers up -d
 
 # Add subgraph indexing
@@ -842,7 +842,7 @@ docker compose --profile ui up -d
 |-------|----------|------|
 | LUX C-Chain | 96369 | 4010 |
 | Zoo Network | 200200 | 4011 |
-| Hanzo AI Chain | 36963 | 4012 |
+| Pars Network AI Chain | 36963 | 4012 |
 
 **Network:** `lux-network` (172.30.0.0/16)
 
@@ -856,7 +856,7 @@ docker compose --profile ui up -d
 | Feature | Stack | Universe |
 |---------|-------|----------|
 | Nodes | 1 | 5 (validators) |
-| Explorers | 1 (C-Chain) | 3 (LUX, Zoo, Hanzo) |
+| Explorers | 1 (C-Chain) | 3 (LUX, Zoo, Pars Network) |
 | Use Case | Development | Production |
 | Network | Single node | Full consensus |
 
@@ -999,7 +999,7 @@ EVM interface to B-Chain MPC bridge operations:
 | 0x0445 | BRIDGE_SIGNER | MPC signer interface | 150,000 |
 
 **Supported Chains:**
-- Lux ecosystem: C-Chain (96369), Hanzo (36963), Zoo (200200), SPC (36911)
+- Lux ecosystem: C-Chain (96369), Pars Network (36963), Zoo (200200), SPC (36911)
 - External: Ethereum (1), Arbitrum (42161), Optimism (10), Base (8453), Polygon (137), BSC (56), Avalanche (43114)
 
 **Key Features:**
